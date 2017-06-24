@@ -1,6 +1,8 @@
 package com.gj.diary.utils;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -240,14 +242,51 @@ public class ImageUtil {
 //				ImageUtil.writeMessage(destFile,diaryMessage);
 //			}
 //		}
-		String returnMessage="";
-		String msg = "CB7B46347705F063295462350327B3754429584652706EF7593CAB37406CAD6DF9D42179949527F036EA29B62F088F313B223FAB3F9C4A3A42D561F3BACB633D6AAA8A84681C5936082777E1FB05C22EB1CFF5BEFF0AE5BF9ABDF01A1F30B3C03481C1F9A702AB7E7E0D7EF318C99B744A11B9BA9FC28BD1163E1FC4054B6B542C82EE3AFF6C5E708B2528E4C78BEE657F2B4537FF42CB9D791C0AEE348888914FB33FC2DB60A39FF43D03910723A2E58D5B4716F0D191512914D8EFA29FE4B384D0E2D5B6F1C34AA7C9F8618C41C11809F7F614ECF6F49C0407FB6207CA4C64";
-        String key ="13E0787ED11A1E4740F0FCA11AE27B63TRUE";
-        returnMessage = DESUtil.Decrypt( msg, key.substring( 0, 24 ).getBytes("UTF-8") )+"\n"+returnMessage;
-        System.out.println( returnMessage );
+//		String returnMessage="";
+//		String msg = "CB7B46347705F063295462350327B3754429584652706EF7593CAB37406CAD6DF9D42179949527F036EA29B62F088F313B223FAB3F9C4A3A42D561F3BACB633D6AAA8A84681C5936082777E1FB05C22EB1CFF5BEFF0AE5BF9ABDF01A1F30B3C03481C1F9A702AB7E7E0D7EF318C99B744A11B9BA9FC28BD1163E1FC4054B6B542C82EE3AFF6C5E708B2528E4C78BEE657F2B4537FF42CB9D791C0AEE348888914FB33FC2DB60A39FF43D03910723A2E58D5B4716F0D191512914D8EFA29FE4B384D0E2D5B6F1C34AA7C9F8618C41C11809F7F614ECF6F49C0407FB6207CA4C64";
+//        String key ="13E0787ED11A1E4740F0FCA11AE27B63TRUE";
+//        returnMessage = DESUtil.Decrypt( msg, key.substring( 0, 24 ).getBytes("UTF-8") )+"\n"+returnMessage;
+//        System.out.println( returnMessage );
 		
 //		ImageUtil.getPhotoMessage("F:\\日记\\日记\\picture\\2016\\2016-06\\2016-06-05.jpg","6D56BA95C8EC762F45C800904AF852B1TRUE");
+		File fromFile = new File("D:/diaryPicture/background.jpg");
+		File toFile =  new File("D:/diaryPicture/background1.jpg");
+		resizePng(fromFile,toFile,100,100,true);
 	}
 	
+	 public static void resizePng(File fromFile, File toFile, int outputWidth, int outputHeight,  
+	            boolean proportion) {  
+	        try {  
+	            BufferedImage bi2 = ImageIO.read(fromFile);  
+	            int newWidth;  
+	            int newHeight;  
+	            // 判断是否是等比缩放  
+	            if (proportion) {  
+	                // 为等比缩放计算输出的图片宽度及高度  
+	                double rate1 = ((double) bi2.getWidth(null)) / (double) outputWidth + 0.1;  
+	                double rate2 = ((double) bi2.getHeight(null)) / (double) outputHeight + 0.1;  
+	                // 根据缩放比率大的进行缩放控制  
+	                double rate = rate1 < rate2 ? rate1 : rate2;  
+	                newWidth = (int) ((bi2.getWidth(null)) / rate);  
+	                newHeight = (int) ((bi2.getHeight(null)) / rate);  
+	            } else {  
+	                newWidth = outputWidth; // 输出的图片宽度  
+	                newHeight = outputHeight; // 输出的图片高度  
+	            }  
+	            BufferedImage to = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);  
+	            Graphics2D g2d = to.createGraphics();  
+	            to = g2d.getDeviceConfiguration().createCompatibleImage(newWidth, newHeight,  
+	                    Transparency.TRANSLUCENT);  
+	            g2d.dispose();  
+	            g2d = to.createGraphics();  
+	            @SuppressWarnings("static-access")  
+	            Image from = bi2.getScaledInstance(newWidth, newHeight, bi2.SCALE_AREA_AVERAGING);  
+	            g2d.drawImage(from, 0, 0, null);  
+	            g2d.dispose();  
+	            ImageIO.write(to, "png", toFile);  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	    } 
 	
 }

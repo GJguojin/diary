@@ -29,8 +29,8 @@ public class DiaryUtil {
 	
 	private static final String salt = "diary";
 	
-	public static final Integer W = 2049;//缩放后宽
-	public static final Integer H = 1152;//缩放后高
+	public static final Integer W = 2080;//缩放后宽
+	public static final Integer H = 1168;//缩放后高
 
 	public static void setLocationCenter(Container container){
 		Toolkit kit = Toolkit.getDefaultToolkit(); // 定义工具包
