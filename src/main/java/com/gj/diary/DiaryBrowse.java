@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -53,6 +54,8 @@ public class DiaryBrowse extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	//private static Map<String,DefaultMutableTreeNode> treeLeafMap = new HashMap<String,DefaultMutableTreeNode>();
+	
+	private static Pattern p = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\.jpg$") ;
 	
 	public static Set<String> imageTreeSet = new HashSet<String>();
 
@@ -640,6 +643,11 @@ public class DiaryBrowse extends JFrame {
 			if(files[i].isFile() && fileName.endsWith("temp")){
 				continue;
 			}
+            if(files[i].isFile()){
+                if(!p.matcher(fileName).matches()){
+                    continue;
+                }
+            }
 			subNode = new DefaultMutableTreeNode();
 			DiaryTreeLeaf leaf = new DiaryTreeLeaf(fileName,filePath);
 			subNode.setUserObject(leaf);
