@@ -137,7 +137,11 @@ public class ImageUtil {
 			for(String msg :messages){
 				msg =msg.replaceAll( "\n", "" );
 				key = key.replaceAll( "\n", "" );
-				returnMessage = DESUtil.Decrypt( msg, key.substring( 0, 24 ).getBytes("UTF-8") )+"\n"+returnMessage;
+				String decrypt = DESUtil.Decrypt(msg, key.substring(0, 24).getBytes("UTF-8"));
+				if(decrypt.startsWith(" ")){
+					decrypt = "    "+decrypt.trim();
+				}
+				returnMessage = decrypt+"\n"+returnMessage;
 			}
 			returnMap.put( "message", returnMessage );
 		} catch( Exception e ) {
