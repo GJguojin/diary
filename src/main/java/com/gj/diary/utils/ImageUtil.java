@@ -25,9 +25,11 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class ImageUtil {
 	
-	private final static String MESSAGE_LINE= "=======================================================================";
+	public final static String MESSAGE_LINE= "=======================================================================";
 	
 	public final static String PHOTO_LINE= "***********************************************************************";
+	
+	public static final String salt = "diary";
 	
 	public static void coptFile( String fileName,File destFile ) throws IOException {
 		File file = new File( fileName );// 读入文件
@@ -38,21 +40,6 @@ public class ImageUtil {
 		Map<String, Integer> imageWH = DiaryUtil.getImageWH( width, height, DiaryUtil.W, DiaryUtil.H );
 		int w = imageWH.get( "width" );
 		int h = imageWH.get( "height" );
-//		if(w < 2049 && h < 1152){
-//			FileInputStream fileInputStream = null;
-//			FileOutputStream fileOutputStream = null;
-//			fileInputStream = new FileInputStream( file );
-//			fileOutputStream = new FileOutputStream( destFile );
-//			byte[] by = new byte[1024];
-//			int len;
-//			while( ( len = fileInputStream.read( by ) ) != -1 ) {
-//				fileOutputStream.write( by, 0, len );
-//			}
-//			fileInputStream.close();
-//			fileOutputStream.flush();
-//			fileOutputStream.close();
-//			
-//		}else{
 			BufferedImage bufferedImage = new BufferedImage( w, h, BufferedImage.TYPE_INT_RGB );
 			bufferedImage.getGraphics().drawImage( image.getScaledInstance(w, h, BufferedImage.SCALE_SMOOTH), 0, 0,w ,h , null ); // 绘制缩小后的图
 			FileOutputStream out = new FileOutputStream( destFile ); // 输出到文件流
@@ -83,9 +70,10 @@ public class ImageUtil {
 		
 		bufferedWriter.newLine();
 		bufferedWriter.write( MESSAGE_LINE );
+		String newkey = salt.toUpperCase()+key;
 		for(String msg : text.split( "\n" )){
 			bufferedWriter.newLine();
-			bufferedWriter.write(DESUtil.Encrypt( msg, key.substring( 0, 24 ).getBytes("UTF-8") ) );
+			bufferedWriter.write(DESUtil.encrypt( msg, newkey.substring( 0, 24 ).getBytes("UTF-8"),"base64") );
 		}
 		bufferedWriter.close();
 		file.setReadOnly();
@@ -134,10 +122,11 @@ public class ImageUtil {
 					System.out.println( rf.readLine() );
 				}
 			}
+			key = key.replaceAll( "\n", "" );
+			key = salt.toUpperCase()+key;
 			for(String msg :messages){
 				msg =msg.replaceAll( "\n", "" );
-				key = key.replaceAll( "\n", "" );
-				String decrypt = DESUtil.Decrypt(msg, key.substring(0, 24).getBytes("UTF-8"));
+				String decrypt = new String(DESUtil.decrypt(msg, key.substring(0, 24).getBytes("UTF-8"),"base64"),"UTF-8");
 				if(decrypt.startsWith(" ")){
 					decrypt = "    "+decrypt.trim();
 				}
@@ -166,7 +155,8 @@ public class ImageUtil {
 		bufferedWriter.newLine();
 		bufferedWriter.write( PHOTO_LINE );
 		bufferedWriter.newLine();
-		bufferedWriter.write( DESUtil.Encrypt( splitText, key.substring(8).getBytes("UTF-8") ) );
+		String newKey = salt.toUpperCase()+key.substring(8+salt.length());
+		bufferedWriter.write( DESUtil.encrypt( splitText, newKey.getBytes("UTF-8") ,"base64"));
 		bufferedWriter.newLine();
 		bufferedWriter.write( PHOTO_LINE );
 		bufferedWriter.flush();
@@ -184,9 +174,10 @@ public class ImageUtil {
 		byte buffer[] = new byte[1024*5];
 		bufferedWriter.newLine();
 		bufferedWriter.write( PHOTO_LINE );
+		String newKey = salt.toUpperCase()+key.substring(8+salt.length());
 		while( ( c = in.read( buffer ) ) != -1 ) {
 			bufferedWriter.newLine();
-			bufferedWriter.write( DESUtil.Encrypt( buffer, key.substring(8).getBytes("UTF-8") ) );
+			bufferedWriter.write( DESUtil.encrypt( buffer, newKey.getBytes("UTF-8"),"base64") );
 		}
 		bufferedWriter.newLine();
 		bufferedWriter.write( PHOTO_LINE );
@@ -199,7 +190,7 @@ public class ImageUtil {
 		if(key == null || "".equals( key )){
 			return null;
 		}
-		key = key.substring( 8,32 );
+		key = salt.toUpperCase()+key.substring(8+salt.length(),32); 
 		BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream(readPath) ) );
 		File file = new File(DiaryUtil.outerConfigPath+"tempPhoto" );
 		if( !file.exists() ) {
@@ -213,7 +204,7 @@ public class ImageUtil {
 				break;
 			}
 			if(flag){
-				out.write( DESUtil.Decrypt1( line, key.getBytes("UTF-8") ) );
+				out.write( DESUtil.decrypt( line, key.getBytes("UTF-8"),"base64" ) );
 			}
 			if(!flag && line.equals( PHOTO_LINE )){
 				flag =true;

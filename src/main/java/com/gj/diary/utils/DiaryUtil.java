@@ -27,7 +27,6 @@ public class DiaryUtil {
 	
 	private static final String outerConfigName = "diaryConfig.properties";
 	
-	private static final String salt = "diary";
 	
 	public static final Integer W = 2080;//缩放后宽
 	public static final Integer H = 1168;//缩放后高
@@ -99,8 +98,8 @@ public class DiaryUtil {
 				}else{
 					return false;
 				}
-				properties.setProperty( "password", MD5Util.getMd532( "00000000"+salt ) );
-				properties.setProperty( "passwordPhoto", MD5Util.getMd532( "00000000"+salt ) );
+				properties.setProperty( "password", MD5Util.getMd532( "00000000"+ImageUtil.salt ) );
+				properties.setProperty( "passwordPhoto", MD5Util.getMd532( "00000000"+ImageUtil.salt ) );
 				
 			}else{
 				file = new File( outerConfigPath +outerConfigName);
@@ -202,7 +201,7 @@ public class DiaryUtil {
 	
 	
 	public static String getMd5String(String password){
-		return MD5Util.getMd532( password+salt );
+		return MD5Util.getMd532( password+ImageUtil.salt );
 	}
 	
 	public static boolean checkPassword(String password,String model){

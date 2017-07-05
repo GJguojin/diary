@@ -41,7 +41,7 @@ public class ImageSplitUtil {
 		if(key == null || "".equals( key )){
 			return null;
 		}
-		key = key.substring( 8,32 );
+		key = ImageUtil.salt.toUpperCase()+key.substring(8+ImageUtil.salt.length(),32); 
 		BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream(readPath) ) );
 		String returnString="";
 		String line = null;
@@ -51,7 +51,7 @@ public class ImageSplitUtil {
 				break;
 			}
 			if(flag){
-				returnString += new String( DESUtil.Decrypt1( line, key.getBytes("UTF-8")),"UTF-8");
+				returnString += new String(DESUtil.decrypt( line, key.getBytes("UTF-8"),"base64"));
 			}
 			if(!flag && line.equals( ImageUtil.PHOTO_LINE )){
 				flag =true;

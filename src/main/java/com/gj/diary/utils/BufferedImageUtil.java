@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,9 +18,6 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import com.gj.diary.DiaryBrowse;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 public class BufferedImageUtil {
 	
@@ -56,7 +54,7 @@ public class BufferedImageUtil {
 				while ((tempString = in.readLine()) != null) {
 					String imgDate =tempString.substring(0, 10);
 					String imgString = tempString.substring(10);
-					ByteArrayInputStream stram = new ByteArrayInputStream(new BASE64Decoder().decodeBuffer(imgString));    
+					ByteArrayInputStream stram = new ByteArrayInputStream(Base64.getDecoder().decode(imgString));    
 					bufferImageMap.get(month).put(imgDate, ImageIO.read(stram));
 		        }
 				in.close();
@@ -87,7 +85,7 @@ public class BufferedImageUtil {
 		ImageIO.write(bufferedImage, "jpg", byteOut);
 		byte[] photoArray = byteOut.toByteArray();
 		BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
-		String encode = new BASE64Encoder().encode(photoArray);
+		String encode =new String(Base64.getEncoder().encode(photoArray));
 		Pattern p = Pattern.compile("\\s*|\t|\r|\n");
 		Matcher m = p.matcher(encode);
 		encode = m.replaceAll("");
