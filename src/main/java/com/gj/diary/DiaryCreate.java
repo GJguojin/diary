@@ -73,6 +73,7 @@ public class DiaryCreate {
 	
 	private DiaryProperties diaryProperties;
 	
+	@SuppressWarnings("unused")
 	private JCheckBox checkBox;
 	
 	private JButton cratetButton;
@@ -357,6 +358,7 @@ public class DiaryCreate {
 		JButton photoButton = new JButton( "浏览图片" );
 		photoButton.setBounds( 524, 417, 93, 31 );
 		photoButton.addActionListener( new ActionListener() {
+			@SuppressWarnings("hiding")
 			@Override
 			public void actionPerformed( ActionEvent e ) {
 //				JOptionPane.showMessageDialog( frmSs, DiaryUtil.getProperties( "currentDirectory" )+"---"+System.getProperty( "user.dir" )+"\\config\\diaryConfig.properties", "错误", JOptionPane.ERROR_MESSAGE );
@@ -399,6 +401,7 @@ public class DiaryCreate {
 		cratetButton.setFont(new Font("宋体", Font.PLAIN, 14));
 		cratetButton.setBounds( 278, 590, 105, 30 );
 		cratetButton.addActionListener( new ActionListener() {
+			@SuppressWarnings("hiding")
 			@Override
 			public void actionPerformed( ActionEvent arg0 ) {
 				if( readPath == null || "".equals( readPath ) ) {

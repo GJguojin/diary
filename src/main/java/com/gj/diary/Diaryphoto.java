@@ -17,10 +17,6 @@ import javax.swing.border.EmptyBorder;
 import com.gj.diary.utils.DiaryUtil;
 
 public class Diaryphoto extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;

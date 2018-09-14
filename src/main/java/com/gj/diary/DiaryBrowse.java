@@ -57,7 +57,7 @@ public class DiaryBrowse extends JFrame {
 
 	private static Pattern p = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\.jpg$");
 
-	public static Set<String> imageTreeSet = new HashSet<String>();
+	public static Set<String> imageTreeSet = new HashSet<>();
 
 	private int frameWidth;
 
@@ -134,6 +134,7 @@ public class DiaryBrowse extends JFrame {
 
 	private int x = 0;
 	
+	@SuppressWarnings("unused")
 	private static JPasswordField passwd = new JPasswordField(10);
 
 	/**
@@ -516,6 +517,7 @@ public class DiaryBrowse extends JFrame {
 		jNameTree.setIcon(nameLeafIcon);
 		jNameTree.setFont(new Font("新宋体", Font.BOLD, 13));
 		jNameTree.addActionListener(new ActionListener() {
+			@SuppressWarnings("hiding")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultMutableTreeNode note = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
@@ -539,6 +541,7 @@ public class DiaryBrowse extends JFrame {
 		jImageTree.setIcon(imageLeafIcon);
 		jImageTree.setFont(new Font("新宋体", Font.BOLD, 13));
 		jImageTree.addActionListener(new ActionListener() {
+			@SuppressWarnings("hiding")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultMutableTreeNode note = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
@@ -561,6 +564,7 @@ public class DiaryBrowse extends JFrame {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			@Override
 			public void valueChanged(TreeSelectionEvent arg0) {
+				@SuppressWarnings("hiding")
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 				decryptButton.setVisible(false);
 				decryptItem.setVisible(false);
@@ -610,6 +614,7 @@ public class DiaryBrowse extends JFrame {
 	 * @param root void
 	 * @author jin.guo 2016年5月29日
 	 */
+	@SuppressWarnings("hiding")
 	private void loadingTree(DefaultMutableTreeNode root) {
 		File rootFile = new File(FILE_PATH);
 		File[] roots = rootFile.listFiles();
@@ -628,6 +633,7 @@ public class DiaryBrowse extends JFrame {
 	 * @param node void
 	 * @author jin.guo 2016年5月29日
 	 */
+	@SuppressWarnings("hiding")
 	private void loadingTree(File root, DefaultMutableTreeNode node) {
 		File[] files = root.listFiles();
 		DefaultMutableTreeNode subNode = null;
@@ -702,6 +708,7 @@ public class DiaryBrowse extends JFrame {
 	 * @param node void
 	 * @author jin.guo 2016年5月29日
 	 */
+	@SuppressWarnings("hiding")
 	private void initExpandPath(DefaultMutableTreeNode node) {
 		if (node.isLeaf()) {
 			tree.addSelectionPath(new TreePath(node.getPath()));

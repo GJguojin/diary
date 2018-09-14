@@ -86,6 +86,7 @@ public class DiaryUtil {
 		return flag;
 	}
 
+	@SuppressWarnings("hiding")
 	public static boolean modfiyProperties( Properties properties ) {
 		try {
 			File file = new File( outerConfigPath );
@@ -131,7 +132,7 @@ public class DiaryUtil {
 	 * @author jin.guo 2016年5月30日
 	 */
 	public static Map<String, Integer> getImageWH( int iconWidth, int iconHeight, int labelWidth, int labelHeight ) {
-		Map<String, Integer> returnMap = new HashMap<String, Integer>();
+		Map<String, Integer> returnMap = new HashMap<>();
 		if( iconWidth >= labelWidth && iconHeight >= labelHeight ) {
 			double labelRate = 1.0 * iconWidth / iconHeight;
 			double iconRate = 1.0 * labelWidth / labelHeight;
@@ -200,10 +201,12 @@ public class DiaryUtil {
 	}
 	
 	
+	@SuppressWarnings("hiding")
 	public static String getMd5String(String password){
 		return MD5Util.getMd532( password+ImageUtil.salt );
 	}
 	
+	@SuppressWarnings("hiding")
 	public static boolean checkPassword(String password,String model){
 		if(password != "" && password != null){
 			String oldPassword = "";

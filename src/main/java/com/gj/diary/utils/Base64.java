@@ -1,28 +1,3 @@
-/*
- * Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
- * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
-
 package com.gj.diary.utils;
 
 import java.io.FilterOutputStream;
@@ -77,9 +52,6 @@ import java.util.Objects;
  */
 
 public class Base64 {
-	
-	
-
     private Base64() {}
 
     /**
