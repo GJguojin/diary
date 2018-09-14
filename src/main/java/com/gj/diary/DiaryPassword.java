@@ -39,6 +39,7 @@ public class DiaryPassword extends JDialog {
 			e.printStackTrace();
 		}
 	}
+	
 
 	/**
 	 * Create the dialog.
