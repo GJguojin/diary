@@ -85,6 +85,7 @@ public class DiaryPassword extends JDialog {
 				okButton.setFont(new Font("宋体", Font.PLAIN, 14));
 				okButton.addActionListener( new  ActionListener(){
 				
+					@SuppressWarnings("hiding")
 					@Override
 					public void actionPerformed( ActionEvent arg0 ) {
 						String oldPassword = new String(oldTextField.getPassword());
