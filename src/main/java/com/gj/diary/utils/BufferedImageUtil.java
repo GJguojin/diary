@@ -21,7 +21,7 @@ import com.gj.diary.DiaryBrowse;
 
 public class BufferedImageUtil {
 	
-	private static HashMap<String,HashMap<String,BufferedImage>> bufferImageMap = new HashMap<String,HashMap<String,BufferedImage>>();
+	private static HashMap<String,HashMap<String,BufferedImage>> bufferImageMap = new HashMap<>();
 	
 	public static BufferedImage getBufferedImage(String date) throws IOException{
 		if(date.endsWith("jpg")){
@@ -96,8 +96,4 @@ public class BufferedImageUtil {
 		bufferImageMap.get(month).put(photoName, photoImg);
 	}
 	
-	public static void main(String[] args) throws IOException {
-		String date ="2017-06-14";
-		BufferedImage icon = getBufferedImage(date);
-	}
 }
