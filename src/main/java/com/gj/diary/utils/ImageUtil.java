@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
+@SuppressWarnings("restriction")
 public class ImageUtil {
 	
 	public final static String MESSAGE_LINE= "=======================================================================";
@@ -80,12 +81,12 @@ public class ImageUtil {
 	}
 	
 	public static Map<String,String> getMessage(String pathName){
-		 Map<String,String> returnMap = new HashMap<String,String>();
+		 Map<String,String> returnMap = new HashMap<>();
 		String returnMessage = "";
 		String key = "";
 		RandomAccessFile rf = null;
 		int flag = 0;
-		List<String> messages = new ArrayList<String>();
+		List<String> messages = new ArrayList<>();
 		try {
 			rf = new RandomAccessFile( pathName, "r" );
 			long fileLength = rf.length();

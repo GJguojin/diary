@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
+@SuppressWarnings("restriction")
 public class ImageSplitUtil {
 
 	public static void main(String[] args) throws IOException {
@@ -119,7 +120,7 @@ public class ImageSplitUtil {
 		}
 		BufferedImage mergeImage = mergeImage(newImgs);
 		String codeString = getCodeString(code);
-		Map<String,Object> returnMap = new HashMap<String,Object>();
+		Map<String,Object> returnMap = new HashMap<>();
 		returnMap.put("codeString", codeString);
 		returnMap.put("whString", ""+chunkWidth+"#"+chunkHeight);
 		returnMap.put("imageBuffer", mergeImage);
