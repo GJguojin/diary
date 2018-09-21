@@ -52,9 +52,6 @@ import java.util.Objects;
  */
 
 public class Base64 {
-	
-	
-
     private Base64() {}
 
     /**
